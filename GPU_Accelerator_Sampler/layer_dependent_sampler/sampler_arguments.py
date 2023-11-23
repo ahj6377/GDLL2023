@@ -1,6 +1,5 @@
 import argparse
 
-
 parser = argparse.ArgumentParser(description='Layer Depedent Sampler')
 
 parser.add_argument('--dataset', type=str, default='data',

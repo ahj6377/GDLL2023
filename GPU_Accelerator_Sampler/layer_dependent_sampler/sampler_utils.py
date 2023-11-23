@@ -17,8 +17,6 @@ def parse_index_file(filename):
     return index
 
 def load_data(dataset_str):
-
-
     if dataset_str == 'ppi':
         prefix = './ppi/ppi'
         G_data = json.load(open(prefix + "-G.json"))
@@ -209,7 +207,6 @@ def scipy_sparse_matrix_to_torch_sparse_matrix(sparse_mx):
 
 def mfgs_to_device(mxl, device):
     return [torch.sparse.FloatTensor(mx[0], mx[1], mx[2]).to(device) for mx in mxl]
-
 
 def get_adjacency_matrix(edges, num_nodes):
     adj = sp.coo_matrix((np.ones(edges.shape[0]), (edges[:, 0], edges[:, 1])),

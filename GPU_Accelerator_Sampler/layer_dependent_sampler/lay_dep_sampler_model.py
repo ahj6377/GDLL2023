@@ -10,6 +10,7 @@ class Graph_Conv(nn.Module):
         self.n_in  = inp
         self.n_out = out
         self.linear = nn.Linear(inp, out)
+
     def forward(self, x, adj):
         out = self.linear(x)
         return F.elu(torch.spmm(adj, out))
@@ -25,6 +26,7 @@ class GCN(nn.Module):
         self.dropout = nn.Dropout(drop_out)
         for i in range(layers-1):
             self.gcs.append(Graph_Conv(n_hid, n_hid))
+
     def forward(self, x, adjs):
         for idx in range(len(self.gcs)):
             x = self.dropout(self.gcs[idx](x, adjs[idx]))
