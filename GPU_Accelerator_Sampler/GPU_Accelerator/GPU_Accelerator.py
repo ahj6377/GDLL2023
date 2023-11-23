@@ -99,7 +99,6 @@ async def gradient_consumer(model, gradient_buffer, con, opt):
                 param.grad.data = param_garad
             opt.step()
 
-
 def average_gradients(model):
     size = float(torch.distirubed.get_world_size())
     for param in model.parameters():
@@ -122,7 +121,6 @@ def sample_consumer(gpu_queue, condition, opt, model, BUFFER_SIZE = 4):
     gradient_buffer = Queue(maxsize= BUFFER_SIZE)
     c_stream = torch.cuda.Stream()
     m_context = model.no_sync
-    # m_context = nullcontext
     with torch.cuda.stream(c_stream):
         g_stream = torch.cuda.Stream()
         model.train()
@@ -220,5 +218,4 @@ def run(proc_id, devices, args):
 graph.create_formats_()
 
 if __name__ == '__main__':
-    # num_gpus = args.num_gpus
     mp.spawn(run, args=(list(range(args.num_gpus)), args,), nprocs=args.num_gpus)
