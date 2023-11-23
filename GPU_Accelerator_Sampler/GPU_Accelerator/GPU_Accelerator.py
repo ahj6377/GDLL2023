@@ -19,29 +19,19 @@ from contextlib import nullcontext
 
 from GPU_Accelerator_arguments import args
 
-
-
 dataset = DglNodePropPredDataset(args.dataset)
-
 graph, node_labels = dataset[0]
 # Add reverse edges
 graph = dgl.add_reverse_edges(graph)
 graph.ndata['label'] = node_labels[:, 0]
-
 node_features = graph.ndata['feat']
 num_features = node_features.shape[1]
 num_classes = (node_labels.max() + 1).item()
-
-
 
 idx_split = dataset.get_idx_split()
 train_nids = idx_split['train']
 valid_nids = idx_split['valid']
 test_nids = idx_split['test']
-
-
-
-
 
 def sample_generator(gpu_queue, condition, train_dataloader, valid_dataloader, model, proc_id):
     d_stream = torch.cuda.Stream()
@@ -97,7 +87,6 @@ async def gradient_generator(model, gradient_buffer, con):
             gradient_buffer.put(param_avg)
             con.notify()
             con.release()
-
 
 async def gradient_consumer(model, gradient_buffer, con, opt):
             con.acquire()
