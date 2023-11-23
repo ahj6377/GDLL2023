@@ -92,7 +92,6 @@ for iter in range(5):
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 0.2)
                 optimizer.step()
                 train_losses += [loss_train.detach().tolist()]
-
         model.eval()
         adjs, input_nodes, output_nodes = valid_data
         adjs = mfgs_to_device(adjs, device)
