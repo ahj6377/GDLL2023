@@ -19,29 +19,19 @@ from contextlib import nullcontext
 
 from GPU_Accelerator_arguments import args
 
-
-
 dataset = DglNodePropPredDataset(args.dataset)
-
 graph, node_labels = dataset[0]
 # Add reverse edges
 graph = dgl.add_reverse_edges(graph)
 graph.ndata['label'] = node_labels[:, 0]
-
 node_features = graph.ndata['feat']
 num_features = node_features.shape[1]
 num_classes = (node_labels.max() + 1).item()
-
-
 
 idx_split = dataset.get_idx_split()
 train_nids = idx_split['train']
 valid_nids = idx_split['valid']
 test_nids = idx_split['test']
-
-
-
-
 
 def sample_generator(gpu_queue, condition, train_dataloader, valid_dataloader, model, proc_id):
     d_stream = torch.cuda.Stream()
@@ -98,7 +88,6 @@ async def gradient_generator(model, gradient_buffer, con):
             con.notify()
             con.release()
 
-
 async def gradient_consumer(model, gradient_buffer, con, opt):
             con.acquire()
             if gradient_buffer.empty():
@@ -109,7 +98,6 @@ async def gradient_consumer(model, gradient_buffer, con, opt):
             for param, param_garad in zip(model.parameters(), param_avg):
                 param.grad.data = param_garad
             opt.step()
-
 
 def average_gradients(model):
     size = float(torch.distirubed.get_world_size())
@@ -133,7 +121,6 @@ def sample_consumer(gpu_queue, condition, opt, model, BUFFER_SIZE = 4):
     gradient_buffer = Queue(maxsize= BUFFER_SIZE)
     c_stream = torch.cuda.Stream()
     m_context = model.no_sync
-    # m_context = nullcontext
     with torch.cuda.stream(c_stream):
         g_stream = torch.cuda.Stream()
         model.train()
@@ -231,5 +218,4 @@ def run(proc_id, devices, args):
 graph.create_formats_()
 
 if __name__ == '__main__':
-    # num_gpus = args.num_gpus
     mp.spawn(run, args=(list(range(args.num_gpus)), args,), nprocs=args.num_gpus)
