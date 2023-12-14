@@ -161,7 +161,7 @@ def sym_normalize(mx):
     mx = r_mat_inv.dot(mx).dot(c_mat_inv)
     return mx
 
-
+# matrix normalize
 def matrix_row_normalize(mx):
     """Row-normalize sparse matrix"""
     rowsum = np.array(mx.sum(1))
