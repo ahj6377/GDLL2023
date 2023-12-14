@@ -195,6 +195,7 @@ def stat(l):
     return np.average(l), np.sqrt(np.var(l))
 
 def scipy_sparse_matrix_to_torch_sparse_matrix(sparse_mx):
+    # sparse matrix
     sparse_mx = sparse_mx.tocoo().astype(np.float32)
     if len(sparse_mx.row) == 0 and len(sparse_mx.col) == 0:
         indices = torch.LongTensor([[], []])
