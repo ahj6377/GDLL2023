@@ -161,6 +161,7 @@ def sym_normalize(mx):
     mx = r_mat_inv.dot(mx).dot(c_mat_inv)
     return mx
 
+# matrix normalize
 def matrix_row_normalize(mx):
     """Row-normalize sparse matrix"""
     rowsum = np.array(mx.sum(1))
@@ -193,7 +194,7 @@ def norm(l):
 
 def stat(l):
     return np.average(l), np.sqrt(np.var(l))
-
+# scipy matrix to torch matrix
 def scipy_sparse_matrix_to_torch_sparse_matrix(sparse_mx):
     # sparse matrix
     sparse_mx = sparse_mx.tocoo().astype(np.float32)
@@ -214,7 +215,7 @@ def get_adjacency_matrix(edges, num_nodes):
     adj = sp.coo_matrix((np.ones(edges.shape[0]), (edges[:, 0], edges[:, 1])),
                     shape=(num_nodes, num_nodes), dtype=np.float32)
     return adj + adj.T.multiply(adj.T > adj) - adj.multiply(adj.T > adj)
-
+# get laplacian
 def get_laplacian(adj):
     adj = matrix_row_normalize(adj + sp.eye(adj.shape[0]))
     return scipy_sparse_matrix_to_torch_sparse_matrix(adj)
