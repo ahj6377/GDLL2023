@@ -206,6 +206,7 @@ def scipy_sparse_matrix_to_torch_sparse_matrix(sparse_mx):
     shape = torch.Size(sparse_mx.shape)
     return indices, values, shape
 
+# move mfgs to device
 def mfgs_to_device(mxl, device):
     return [torch.sparse.FloatTensor(mx[0], mx[1], mx[2]).to(device) for mx in mxl]
 
