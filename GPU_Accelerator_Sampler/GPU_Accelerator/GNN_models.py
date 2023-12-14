@@ -17,6 +17,7 @@ class GCN_Model(nn.Module):
         h = self.conv2(mfgs[1], (h, h_dst))
         return h
 
+# GraphSAGE Model
 class GraphSAGE_Model(nn.Module):
     def __init__(self, in_feats, h_feats, num_classes):
         super(GraphSAGE_Model, self).__init__()
