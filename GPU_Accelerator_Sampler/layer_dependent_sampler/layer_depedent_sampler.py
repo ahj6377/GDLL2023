@@ -11,6 +11,7 @@ import scipy
 import multiprocessing as mp
 from sampler_arguments import args
 
+# check for cuda
 if args.cuda != -1:
     device = torch.device("cuda:" + str(args.cuda))
 else:
