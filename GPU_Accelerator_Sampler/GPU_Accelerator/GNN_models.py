@@ -2,6 +2,7 @@ import torch.nn as nn
 from dgl.nn import GraphConv
 from dgl.nn import SAGEConv
 import torch.nn.functional as F
+# GCN Model Definition
 class GCN_Model(nn.Module):
     def __init__(self, in_feats, h_feats, num_classes):
         super(GCN_Model, self).__init__()
@@ -16,6 +17,7 @@ class GCN_Model(nn.Module):
         h = self.conv2(mfgs[1], (h, h_dst))
         return h
 
+# GraphSAGE Model
 class GraphSAGE_Model(nn.Module):
     def __init__(self, in_feats, h_feats, num_classes):
         super(GraphSAGE_Model, self).__init__()
@@ -31,7 +33,7 @@ class GraphSAGE_Model(nn.Module):
         h = self.conv2(mfgs[1], (h, h_dst))
         return h
 
-
+# Define your custom GNN model here
 class Custom_GNN_Model(nn.Module):
     def __init__(self, in_feats, h_feats, num_classes):
         super(Custom_GNN_Model, self).__init__()

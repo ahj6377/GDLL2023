@@ -195,6 +195,7 @@ def stat(l):
     return np.average(l), np.sqrt(np.var(l))
 
 def scipy_sparse_matrix_to_torch_sparse_matrix(sparse_mx):
+    # sparse matrix
     sparse_mx = sparse_mx.tocoo().astype(np.float32)
     if len(sparse_mx.row) == 0 and len(sparse_mx.col) == 0:
         indices = torch.LongTensor([[], []])
@@ -205,6 +206,7 @@ def scipy_sparse_matrix_to_torch_sparse_matrix(sparse_mx):
     shape = torch.Size(sparse_mx.shape)
     return indices, values, shape
 
+# move mfgs to device
 def mfgs_to_device(mxl, device):
     return [torch.sparse.FloatTensor(mx[0], mx[1], mx[2]).to(device) for mx in mxl]
 
