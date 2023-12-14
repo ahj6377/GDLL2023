@@ -96,6 +96,7 @@ for iter in range(5):
                 optimizer.step()
                 train_losses += [loss_train.detach().tolist()]
         model.eval()
+        # mfgs
         adjs, input_nodes, output_nodes = valid_data
         adjs = mfgs_to_device(adjs, device)
         output = model.forward(features[input_nodes], adjs)
