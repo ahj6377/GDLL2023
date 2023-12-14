@@ -69,6 +69,7 @@ pool = mp.Pool(args.n_pool)
 jobs = data_preparation(pool, lay_dep_sampler, procs_IDS, train_nodes, valid_nodes, fanout, len(features), Q_r_matrix, args.n_layers)
 
 all_res = []
+# train model
 for iter in range(5):
     encd = GCN(n_feat= features.shape[1], n_hid=args.n_hid, layers=args.n_layers, drop_out= 0.2).to(device)
     model  = GCNModel(encd= encd, num_classes=num_classes, drop_out=0.5, inp = features.shape[1])
