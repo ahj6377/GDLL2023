@@ -16,6 +16,7 @@ if args.cuda != -1:
 else:
     device = torch.device("cpu")
 
+# generate samples
 def lay_dep_sampler(seeds, batch, fanout, n_nodes, row_normalize_matrix, depth):
     np.random.seed(seeds)
     prev_nodes_list = batch
